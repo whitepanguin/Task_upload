@@ -85,7 +85,7 @@ class Dog extends Pet {
     return dogname[randomName];
   }
   static getAge() {
-    return Math.floor(Math.random() * 10) + 1;
+    return parseFloat((Math.random() * 10).toFixed(1));
   }
   static getType() {
     const dogtype = ["포메라니안", "말티즈", "푸들", "시바이누", "웰시코기"];
@@ -110,7 +110,7 @@ class Cat extends Pet {
     return catname[randomName];
   }
   static getAge() {
-    return Math.floor(Math.random() * 14) + 1;
+    return  parseFloat((Math.random() * 14).toFixed(1));
   }
   static getType() {
     const cattype = [
@@ -141,7 +141,7 @@ class Hamster extends Pet {
     return hamstername[randomName];
   }
   static getAge() {
-    return Math.floor(Math.random() * 6) + 1;
+    return  parseFloat((Math.random() * 6).toFixed(1));
   }
   static getType() {
     const hamstertype = [
