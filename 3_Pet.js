@@ -12,14 +12,7 @@ class Pet {
     Pet.petCount++;
   }
   get getInfo() {
-    return console.log({
-      name: this.name,
-      type: this.type,
-      age: this.age,
-      hunger: this.hunger,
-      energy: this.energy,
-      totalPets: Pet.petCount,
-    });
+    console.log(`총: ${Pet.petCount}마리 [${this.kind}] 이름:${this.name} /종류:${this.type} /나이:${this.age.toFixed(1)} /에너지:${this.energy} /배고픔:${this.hunger}`);
   }
   checkStatus(){
     if (this.hunger >= 100) {
@@ -236,3 +229,4 @@ PetManager.start();
 PetManager.showAllPets()
 PetManager.addPet(Dog)
 PetManager.simulateDay()
+PetManager.pets.forEach(pet => pet.getInfo);
