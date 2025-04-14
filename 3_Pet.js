@@ -2,12 +2,13 @@ class Pet {
   static petCount = 0;
   energy = 50;
   hunger = 50;
-  constructor(name, type, age) {
+  constructor(name, age, type, kind) {
     this.name = name;
     this.type = type;
     this.age = age;
-    this.hunger = this.hunger > 0 && this.hunger < 100 ? this.hunger : 50;
-    this.energy = this.hunger > 0 && this.hunger < 100 ? this.hunger : 50;
+    this.kind = kind;
+    this.hunger = this.hunger ;
+    this.energy = this.energy ;
     Pet.petCount++;
   }
   get getInfo() {
@@ -20,19 +21,58 @@ class Pet {
       totalPets: Pet.petCount,
     });
   }
+  checkStatus(){
+    if (this.hunger >= 100) {
+      console.log(`${this.name} 너무 배고파요! 보살핌으로 배고픔을 50으로 회복합니다.`);
+      this.hunger = 50;
+    } else if (this.hunger <= 0) {
+      console.log(`${this.name} 과식했어요! 보살핌으로 배고픔을 50으로 조절합니다.`);
+      this.hunger = 50;
+    }
+    if (this.energy >= 100) {
+      console.log(`${this.name} 너무 팔팔해요! 보살핌으로 에너지을 50으로 회복합니다.`);
+      this.energy = 50;
+    } else if (this.energy <= 0) {
+      console.log(`${this.name} 지쳤어요! 보살핌으로 에너지을 50으로 조절합니다.`);
+      this.energy = 50;
+    }
+  }
   eat() {
     this.hunger -= 30;
     this.energy += 10;
+    this.checkStatus();
   }
   play() {
     this.hunger += 20;
     this.energy -= 20;
     this.age += 0.1;
+    this.checkStatus();
   }
   sleep() {
     this.hunger += 10;
     this.energy += 40;
+    this.checkStatus();
   }
+  action(){
+    const actClass = ["eat", "play", "sleep"];
+    const randomAct = Math.floor(Math.random() * actClass.length);
+    const action = actClass[randomAct];
+    switch (action) {
+      case "eat":
+        this.eat()
+        console.log(`밥먹기!${this.speak()} :[${this.kind}] 이름:${this.name} /에너지:${this.energy} /배고픔:${this.hunger} `);
+        break;
+      case "play":
+        this.play()
+        console.log(`놀기기!${this.speak()} :[${this.kind}] 이름:${this.name} /에너지:${this.energy} /배고픔:${this.hunger} `);
+        break;
+      case "sleep":
+        this.sleep()
+        console.log(`잠!${this.speak()} :[${this.kind}] 이름:${this.name} /에너지:${this.energy} /배고픔:${this.hunger} `);
+        break;
+    }
+  }
+  
   speak() {
     console.log("펫의 울음소리!");
   }
@@ -56,10 +96,11 @@ class Dog extends Pet {
     const name = Dog.getName();
     const age = Dog.getAge();
     const type = Dog.getType();
-    super(name, age, type);
+    const kind = "강아지";
+    super(name, age, type, kind);
   }
   speak() {
-    console.log("🦴멍멍!🦴");
+    return "🦴멍멍!🦴";
   }
 }
 class Cat extends Pet {
@@ -86,10 +127,11 @@ class Cat extends Pet {
     const name = Cat.getName();
     const age = Cat.getAge();
     const type = Cat.getType();
-    super(name, age, type);
+    const kind = "고양이";
+    super(name, age, type, kind);
   }
   speak() {
-    console.log("🐾야옹!🐾");
+    return "🐾야옹!🐾";
   }
 }
 class Hamster extends Pet {
@@ -116,10 +158,11 @@ class Hamster extends Pet {
     const name = Hamster.getName();
     const age = Hamster.getAge();
     const type = Hamster.getType();
-    super(name, age, type);
+    const kind = "햄스터";
+    super(name, age, type, kind);
   }
   speak() {
-    console.log("🐹찍찍!🐹");
+    return "🐹찍찍!🐹";
   }
 }
 class PetManager {
@@ -133,23 +176,32 @@ class PetManager {
       case Dog:
         const ndog = new Dog();
         PetManager.pets.push(ndog);
-        console.log(`새로운 친구가 추가되었어요! : ` + Object.entries(ndog));
+        console.log(`새로운 ${ndog.kind}친구가 추가되었어요! :이름:${ndog.name} /종류:${ndog.type} /나이:${ndog.age} `);
+        console.log("----------")
         break;
       case Cat:
         const ncat = new Cat();
         PetManager.pets.push(ncat);
-        console.log(`새로운 친구가 추가되었어요! : ` + Object.entries(ncat));
+        console.log(`새로운 ${ncat.kind}친구가 추가되었어요! :이름:${ncat.name} /종류:${ncat.type} /나이:${ncat.age} `);
+        console.log("----------")
         break;
       case Hamster:
         const nham = new Hamster();
         PetManager.pets.push(nham);
-        console.log(`새로운 친구가 추가되었어요! : ` + Object.entries(nham));
+        console.log(`새로운 ${nham.kind}친구가 추가되었어요! :이름:${nham.name} /종류:${nham.type} /나이:${nham.age} `);
+        console.log("----------")
         break;
       default:
         console.error("Unknown pet type");
     }
   }
   static start() {
+    console.log(`안녕하세요! 펫 샷에 어서오세요!`)
+    console.log(`실행은 "PetManager.start();"로 당신의 펫을 뽑아보세요!`)
+    console.log(`기본으로 3마리가 주어지고, 추가로 원하시는 펫이 있다면,`)
+    console.log(`"PetManager.addPet(펫)" 펫: Dog,Cat,Hamster을 적고 실행하시면 됩니다.`)
+    console.log(`현재 가지고 있는 펫을 보고 싶다면 "PetManager.showAllPets()"을 실행해주세요`)
+    console.log(`모든 준비가 끝나면 "PetManager.simulateDay()"로 3~5일의 행동을 관찰해요!`)
     const petClass = [Dog, Cat, Hamster];
     for (let i = 0; i < 3; i++) {
       const randomIndex = Math.floor(Math.random() * petClass.length);
@@ -159,12 +211,28 @@ class PetManager {
     }
   }
   static showAllPets() {
-    return PetManager.pets;
+    PetManager.pets.forEach(pet => {
+      console.log(`[${pet.kind}] 이름:${pet.name} /종류:${pet.type} /나이:${pet.age.toFixed(1)} /에너지:${pet.energy} /배고픔:${pet.hunger} `);
+    });
+    console.log("----------")
   }
-  simulateDay() {}
+  
+  static simulateDay() {
+    const dayClass = ["3", "4", "5"];
+    const randomDay = Math.floor(Math.random() * dayClass.length);
+    const days = parseInt(dayClass[randomDay]);
+    console.log(`${days} 일이 지났어요!`)
+    for(let i=0;i<days;i++){
+      console.log(`-----Day-${i+1}-----`)
+      for(const pet of PetManager.pets){
+        pet.action()
+      }
+    }
+    PetManager.showAllPets()
+  }
 }
 
 PetManager.start();
-console.log(PetManager.showAllPets());
-PetManager.addPet(Cat);
-console.log(PetManager.showAllPets());
+PetManager.showAllPets()
+PetManager.addPet(Dog)
+PetManager.simulateDay()
