@@ -1,0 +1,16 @@
+공공데이터 api 활용 UI 만들기
+공공데이터 api 활용해서 간단한 사용자 인터페이스를 만들어보기
+*관심 있는 API를 선택(예: 날씨, 미세먼지, 관광지 정보, 버스/지하철..)
+*선택한 api를 활용하여 데이터를 가져오고 웹페이지에 보기좋기 표시
+
+https://www.data.go.kr/data/15040464/openapi.do
+https://www.its.go.kr/opendata/opendataList?service=event
+승인하는데 시간이 걸린다 패스
+
+https://www.data.go.kr/iim/api/selectAPIAcountView.do
+page 3
+page 13
+page 58
+page 68
+page 113
+page 124
